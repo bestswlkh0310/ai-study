@@ -3,6 +3,64 @@ import random
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
+def dividedArrToKNNArr(xArr, yArr):
+    result = []
+    for i in range(len(xArr)):
+        result.append(KNNPos(xArr[i], yArr[i]))
+    
+    return result
+
+class KNNPos:
+    def __init__(self, x, y, d = 0):
+        self.x = x
+        self.y = y
+        self.d = d
+
+    def getPos(self):
+        return (self.x, self.y)
+
+    def getKNNPos(self):
+        return (self.x, self.y, self.d)
+
+class KNNArr:
+    def __init__(self, arr):
+        self.arr: [KNNPos] = arr
+
+    def getArr(self):
+        return self.arr
+
+    def getXArr(self):
+        return [i.x for i in self.arr]
+    
+    def getYArr(self):
+        return [i.y for i in self.arr]
+    
+    def getDArr(self):
+        return [i.d for i in self.arr]
+    
+    def getDividedArr(self):
+        return (self.getXArr(), self.getYArr(), self.getDArr())
+
+class KNNPredictor:
+    def __init__(self):
+        self.trainArr = []
+        self.testArr = []
+        
+
+    def registerTrainSet(self, arr):
+        knnArr = dividedArrToKNNArr(arr)
+        self.trainArr.append(knnArr)
+    
+    def registerTestSet(self, arr):
+        knnArr = dividedArrToKNNArr(arr)
+        self.testArr.append(knnArr)
+
+    def train(self):
+        for i in range(len(self.trainArr)):
+            pass
+            # self.trainArr[i].d = 
+
+
 def scatting(n, x1, x2, y1, y2):
     x_arr1 = []
     for _ in range(n):

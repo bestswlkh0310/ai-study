@@ -48,7 +48,7 @@ model.add(Dense(y_train.shape[1], activation="softmax"))
 
 # 모델 컴파일. 다중분류이므로 categorical_crossentropy, 정확도 표기
 model.compile(loss="categorical_crossentropy",
-              optimizer="adam",
+              optimizer="nadam",
               metrics=["acc"])
 
 model.summary()  # 간단하게 요약해 출력
