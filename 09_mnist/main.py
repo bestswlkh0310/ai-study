@@ -10,7 +10,6 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # load
-
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 print('x_train_shape', x_train.shape)
 print('y_train_shape', y_train.shape)
@@ -22,6 +21,10 @@ x_train = x_train.reshape(60000, 28 * 28).astype('float32') / 255
 x_test = x_test.reshape(10000, 28 * 28).astype('float32') / 255
 print(x_train.shape)
 print(x_test.shape)
+
+# pre
+pre_y_train = y_train
+pre_y_test = y_test
 
 # categorical
 y_train = to_categorical(y_train, 10)
@@ -41,10 +44,34 @@ model.summary()
 
 # learning model
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-model.fit(x_train, y_train, batch_size=128, epochs=10, verbose=1)
+model.fit(x_train, y_train, batch_size=128, epochs=1, verbose=1)
 
 # get score
 score = model.evaluate(x_test, y_test)
 print('score -', score[0])
 print('accuracy -', score[1])
 
+# visualize result
+predicted_classes = np.argmax(model.predict(x_test), axis=1)
+correct_indices = np.nonzero(predicted_classes == pre_y_test)[0]
+incorrect_indices = np.nonzero(predicted_classes != pre_y_test)[0]
+
+# correct
+plt.figure()
+for i, correct in enumerate(correct_indices[:9]):
+    plt.subplot(3, 3, i + 1)
+    plt.imshow(x_test[correct].reshape(28, 28), cmap='gray')
+    plt.title(f'predicted: {predicted_classes[correct]}, class: {pre_y_test[correct]}')
+
+plt.tight_layout()
+plt.show()
+
+# incorrect
+plt.figure()
+for i, incorrect in enumerate(incorrect_indices[:9]):
+    plt.subplot(3, 3, i + 1)
+    plt.imshow(x_test[incorrect].reshape(28, 28), cmap='gray')
+    plt.title(f'predicted: {predicted_classes[incorrect]}, class: {pre_y_test[incorrect]}')
+
+plt.tight_layout()
+plt.show()
