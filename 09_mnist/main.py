@@ -42,3 +42,9 @@ model.summary()
 # learning model
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 model.fit(x_train, y_train, batch_size=128, epochs=10, verbose=1)
+
+# get score
+score = model.evaluate(x_test, y_test)
+print('score -', score[0])
+print('accuracy -', score[1])
+
