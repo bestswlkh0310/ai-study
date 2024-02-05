@@ -45,7 +45,7 @@ def create_gan(discriminator: Sequential, generator: Sequential):
     return gan
 
 
-def plot_generated_images(generator: Sequential):
+def plot_generated_images(qgenerator: Sequential):
     noise = np.random.normal(loc=0, scale=1, size=(100, 100))
     generated_images = generator.predict(noise).reshape(100, 28, 28)
     plt.figure(figsize=(10, 10))
